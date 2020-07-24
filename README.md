@@ -33,24 +33,11 @@ for actuator_id, actuator in sl.actuators.items():
 ```
 
 Changing the actuator state can be done with the `set_actuator_state` in the `service_location` class.
-```python
-# Example: turn OFF actuator with id 1 from service location 12345
-sl = smappee.service_locations.get(12345) # where 12345 should be the correct service location id
-sl.set_actuator_state(id=1, state='OFF')
-```
+
 
 ### Sensors
 A sensor instance holds the sensor id, name, channels, temperature, humidity and battery level.
-```python
-sl = smappee.service_locations.get(12345) # where 12345 should be the correct service location id
-for sensor_id, sensor in sl.sensors.items():
-    sensor.id
-    sensor.name
-    sensor.channels
-    sensor.temperature
-    sensor.humidity
-    sensor.battery
-```
+
 
 Support
 -------
