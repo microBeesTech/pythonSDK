@@ -20,10 +20,12 @@ Use CLIENTID and CLIENT SECRET generated.
 
 Example
 ---------------
+```
 microBees = MicroBees("my-client-id","my-secret")
 token =  await microBees.login("mymicrobeesaccount@microbees.com","mypassword") //this will return the access_token
 bees = await microBees.getBees() // this will return the list of bees connected to mymicrobeesaccount@microbees.com
 cmdRes = await microBees.sendCommand(actuatorId,relayValue) //set the actuatorId to relay value (0 to off, 1 to on, 1000 to turn on for 1 second)
+```
 
 
 Support
