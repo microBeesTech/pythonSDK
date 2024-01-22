@@ -13,7 +13,6 @@ class Configuration:
     _icon = str(obj.get("icon"))
     return Configuration(_actuator_type, _icon)
     
-
 @dataclass
 class Sensor:
   id: int
@@ -56,7 +55,6 @@ class StatusString:
     _icon = str(obj.get("icon"))
     return StatusString(_name, _value, _icon)
 
-
 @dataclass
 class Actuator:
   id: int
@@ -83,8 +81,6 @@ class Actuator:
     _payload =  obj.get("payload") if 'payload' in obj else None
     _value = int(obj.get("value")) if 'value' in obj else None
     return Actuator(_id, _name, _prototypeName, _deviceID, _configuration, _starred, _uptime, _sensorID, _payload, _value)
-
-
 
 @dataclass
 class Bee:
@@ -124,5 +120,5 @@ class Bee:
     _configuration = Configuration.from_dict(obj.get("configuration")) if 'configuration' in obj else None
     _sensors = [Sensor.from_dict(y) for y in obj.get("sensors")] if 'sensors' in obj else None
     _actuators = [Actuator.from_dict(y) for y in obj.get("actuators")] if 'actuators' in obj else None
-    _status_string = [StatusString.from_dict(y) for y in obj.get("status_string")]
+    _status_string = [StatusString.from_dict(y) for y in obj.get("status_string")] if 'status_string' in obj else None
     return Bee(_id, _label, _serial, _gate_serial, _gate_id, _lastUpdate, _name, _active, _productID, _prototypeName, _rssi, _lastActivation, _icon, _configuration, _sensors, _actuators, _status_string)

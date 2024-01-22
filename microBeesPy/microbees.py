@@ -1,7 +1,8 @@
 import base64
 import aiohttp
 import json
-from microBeesPy.bee import Bee
+from microBeesPy.bee import Bee, Actuator
+from microBeesPy.profile import Profile
 
 from microBeesPy.exceptions import MicroBeesException, MicroBeesWrongCredentialsException
 
@@ -12,11 +13,12 @@ class MicroBees :
   VERSION = "1_0"
   clientID = None
   clientSecret = None 
-
-  def __init__(self,clientID,clientSecret,session = None):
+  
+  def __init__(self,clientID=None,clientSecret=None,session = None, token = None):
     self.session  = aiohttp.ClientSession() if session is None  else  session
     self.clientID = clientID
     self.clientSecret = clientSecret
+    self.token = token
   
   async def login(self, username,password,scope="read write"):
     userpass = (
@@ -34,7 +36,7 @@ class MicroBees :
       "Authorization": "Basic %s" % auth,
     }
     try:
-        resp= await self.session.post(self.HOST+"oauth/token",headers = headers, data = data)
+        resp = await self.session.post(self.HOST+"oauth/token",headers = headers, data = data)
         if resp.status == 200:
           response = await resp.text()
           responseObj =  json.loads(response)
@@ -48,11 +50,11 @@ class MicroBees :
   async def getBees(self):
     assert self.token is not None, 'Token must be setted'
     headers = {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer %s" % self.token,
+      "Content-Type": "application/json",
+      "Authorization": "Bearer %s" % self.token,
     }
     try:
-      resp=  await self.session.post(self.HOST+"v/"+self.VERSION+"/getMyBees", headers = headers)
+      resp =  await self.session.post(self.HOST+"v/"+self.VERSION+"/getMyBees", headers = headers)
       if resp.status == 200:
         response = await resp.text()
         responseObj =  json.loads(response)
@@ -79,11 +81,68 @@ class MicroBees :
     }
     try:
       resp = await self.session.post(self.HOST+"v/"+self.VERSION+"/sendCommand", json = data, headers = headers)
-      print(await resp.text())
       if resp.status == 200:
         response = await resp.text()
         responseObj =  json.loads(response)
         return responseObj.get('status')==0
+      else:
+        raise MicroBeesException("Error "+resp.status)
+    except Exception as e:
+      raise e
+    
+  async def getMyBeesByIds (self, beeIDs):
+    assert self.token is not None, 'Token must be setted'
+    headers = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer %s" % self.token,
+    }
+    data = {
+      'ids': beeIDs
+    }
+    try:
+      resp = await self.session.post(self.HOST+"v/"+self.VERSION+"/getMyBeesByIds", json = data, headers = headers)
+      if resp.status == 200:
+        response = await resp.text()
+        responseObj =  json.loads(response)
+        return [Bee.from_dict(y) for y in responseObj.get("data")]
+      else :
+        raise MicroBeesException("Error "+resp.status)
+    except Exception as e:
+      raise e
+    
+  async def getActuatorById (self, actuatorID):
+    assert self.token is not None, 'Token must be setted'
+    headers = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer %s" % self.token,
+    }
+    data = {
+      'id': actuatorID
+    }
+    try:
+      resp = await self.session.post(self.HOST+"v/"+self.VERSION+"/getactuatorstatus", json = data, headers = headers)
+      if resp.status == 200:
+        response = await resp.text()
+        responseObj =  json.loads(response)
+        return Actuator.from_dict(responseObj.get("data"))
+      else :
+        raise MicroBeesException("Error "+resp.status)
+    except Exception as e:
+      raise e
+    
+  async def getMyProfile (self):
+    assert self.token is not None, 'Token must be setted'
+    headers = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer %s" % self.token,
+    }
+    try:
+      resp = await self.session.post(self.HOST+"v/"+self.VERSION+"/getMyProfile", headers = headers)
+      print(await resp.text())
+      if resp.status == 200:
+        response = await resp.text()
+        responseObj =  json.loads(response)
+        return Profile.from_dict(responseObj.get("data"))
       else:
         raise MicroBeesException("Error "+resp.status)
     except Exception as e:
