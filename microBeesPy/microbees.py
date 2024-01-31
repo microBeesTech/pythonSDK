@@ -60,7 +60,7 @@ class MicroBees :
         responseObj =  json.loads(response)
         return [Bee.from_dict(y) for y in responseObj.get("data")]
       else :
-        raise MicroBeesException("Error "+resp.status)
+        raise MicroBeesException("Error "+str(resp.status))
     except Exception as e:
       raise e
 
@@ -86,7 +86,7 @@ class MicroBees :
         responseObj =  json.loads(response)
         return responseObj.get('status')==0
       else:
-        raise MicroBeesException("Error "+resp.status)
+        raise MicroBeesException("Error "+str(resp.status))
     except Exception as e:
       raise e
     
@@ -106,7 +106,7 @@ class MicroBees :
         responseObj =  json.loads(response)
         return [Bee.from_dict(y) for y in responseObj.get("data")]
       else :
-        raise MicroBeesException("Error "+resp.status)
+        raise MicroBeesException("Error "+str(resp.status))
     except Exception as e:
       raise e
     
@@ -126,7 +126,7 @@ class MicroBees :
         responseObj =  json.loads(response)
         return Actuator.from_dict(responseObj.get("data"))
       else :
-        raise MicroBeesException("Error "+resp.status)
+        raise MicroBeesException("Error "+str(resp.status))
     except Exception as e:
       raise e
     
@@ -138,12 +138,11 @@ class MicroBees :
     }
     try:
       resp = await self.session.post(self.HOST+"v/"+self.VERSION+"/getMyProfile", headers = headers)
-      print(await resp.text())
       if resp.status == 200:
         response = await resp.text()
         responseObj =  json.loads(response)
         return Profile.from_dict(responseObj.get("data"))
       else:
-        raise MicroBeesException("Error "+resp.status)
+        raise MicroBeesException("Error "+str(resp.status))
     except Exception as e:
       raise e
