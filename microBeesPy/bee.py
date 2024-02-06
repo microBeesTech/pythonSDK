@@ -6,12 +6,14 @@ from dataclasses import dataclass
 class Configuration:
   actuator_type: str
   icon: str
+  color: List[int]
 
   @staticmethod
   def from_dict(obj: Any) -> 'Configuration':
     _actuator_type = str(obj.get("actuator_type"))
     _icon = str(obj.get("icon"))
-    return Configuration(_actuator_type, _icon)
+    _color = obj.get("color") if 'color' in obj else None
+    return Configuration(_actuator_type, _icon, _color)
     
 @dataclass
 class Sensor:

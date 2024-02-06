@@ -64,7 +64,7 @@ class MicroBees :
     except Exception as e:
       raise e
 
-  async def sendCommand(self,actuatorID,relayValue, commandType =6):
+  async def sendCommand(self,actuatorID,relayValue,commandType=6,color=None,temperature=None):
     assert self.token is not None, 'Token must be setted'
     headers = {
       "Content-Type": "application/json",
@@ -77,6 +77,8 @@ class MicroBees :
         "actuatorID": actuatorID,
         "command_type": commandType,
         "relay_value": relayValue,
+        "color": color,
+        "temperature": temperature,
       }
     }
     try:
