@@ -1,23 +1,29 @@
+from setuptools import find_packages, setup
+import os
+import sys
 import setuptools
+import aiohttp
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+here = lambda *a: os.path.join(os.path.dirname(__file__), *a)
 
-setuptools.setup(
-    name="microbees",
-    version="0.0.1",
-    author="microBees Technology Ltd",
-    author_email="support@microbees.com",
-    description="Offical microBees dev API",
-    long_description=long_description,
+readme = open(here('README.md')).read()
+
+
+setup(
+    name='microBeesPy',
+    packages=find_packages(),
+    version='0.2.2',
+    long_description=readme,
+    keywords='microbees',
     long_description_content_type="text/markdown",
-    url="https://github.com/microBeesTech/pythonHASS",
-    packages=setuptools.find_packages(),
+    description='microBees Python Library',
+    author_email="developers@microbees.com",
+    author='@microBeesTech',
+    url='https://github.com/microBeesTech/pythonSDK/',
     license='MIT',
-    classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-    ],
-    python_requires='>=3.7',
+    install_requires=["aiohttp", "setuptools"],
+    zip_safe=False,
+    platforms=["any"],
+    python_requires='>=3.6',                # Minimum version requirement of the package
+    py_modules=["microBeesPy"],                    # Name of the python package
 )
