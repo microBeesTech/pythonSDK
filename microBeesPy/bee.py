@@ -29,6 +29,33 @@ class Sensor:
   payload: List[float]
   value: int
 
+
+  def __eq__(self, other):
+    if not isinstance(other, Sensor):
+        return False
+    return self.id == other.id
+
+  def __lt__(self, other):
+    if not isinstance(other, Sensor):
+        return NotImplemented
+    return self.id < other.id
+
+  def __le__(self, other):
+    if not isinstance(other, Sensor):
+        return NotImplemented
+    return self.id <= other.id
+
+  def __gt__(self, other):
+    if not isinstance(other, Sensor):
+        return NotImplemented
+    return self.id > other.id
+
+  def __ge__(self, other):
+    if not isinstance(other, Sensor):
+        return NotImplemented
+    return self.id >= other.id
+
+  
   @staticmethod
   def from_dict(obj: Any) -> 'Sensor':
     _id = int(obj.get("id"))
@@ -70,6 +97,32 @@ class Actuator:
   payload: List[float]
   value: int
 
+  def __eq__(self, other):
+    if not isinstance(other, Actuator):
+        return False
+    return self.id == other.id
+
+  def __lt__(self, other):
+    if not isinstance(other, Actuator):
+        return NotImplemented
+    return self.id < other.id
+
+  def __le__(self, other):
+    if not isinstance(other, Actuator):
+        return NotImplemented
+    return self.id <= other.id
+
+  def __gt__(self, other):
+    if not isinstance(other, Actuator):
+        return NotImplemented
+    return self.id > other.id
+
+  def __ge__(self, other):
+    if not isinstance(other, Actuator):
+        return NotImplemented
+    return self.id >= other.id
+
+
   @staticmethod
   def from_dict(obj: Any) -> 'Actuator':
     _id = int(obj.get("id"))
@@ -103,6 +156,34 @@ class Bee:
   sensors: List[Sensor]
   actuators: List[Actuator]
   status_string: List[StatusString]
+
+
+  def __eq__(self, other):
+    if not isinstance(other, Bee):
+        return False
+    return self.id == other.id
+
+  def __lt__(self, other):
+    if not isinstance(other, Bee):
+        return NotImplemented
+    return self.id < other.id
+
+  def __le__(self, other):
+    if not isinstance(other, Bee):
+        return NotImplemented
+    return self.id <= other.id
+
+  def __gt__(self, other):
+    if not isinstance(other, Bee):
+        return NotImplemented
+    return self.id > other.id
+
+  def __ge__(self, other):
+    if not isinstance(other, Bee):
+        return NotImplemented
+    return self.id >= other.id
+
+  
 
   @staticmethod
   def from_dict(obj: Any) -> 'Bee':
