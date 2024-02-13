@@ -1,8 +1,5 @@
 from setuptools import find_packages, setup
 import os
-import sys
-import setuptools
-import aiohttp
 
 here = lambda *a: os.path.join(os.path.dirname(__file__), *a)
 
@@ -12,7 +9,7 @@ readme = open(here('README.md')).read()
 setup(
     name='microBeesPy',
     packages=find_packages(),
-    version='0.2.4',
+    version='0.2.5',
     long_description=readme,
     keywords='microbees',
     long_description_content_type="text/markdown",
