@@ -9,7 +9,7 @@ readme = open(here('README.md')).read()
 setup(
     name='microBeesPy',
     packages=find_packages(),
-    version='0.2.5',
+    version='0.2.9',
     long_description=readme,
     keywords='microbees',
     long_description_content_type="text/markdown",

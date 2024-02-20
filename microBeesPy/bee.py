@@ -29,7 +29,7 @@ class Sensor:
     dc_type: str
     unit: str
     payload: List[float]
-    value: int
+    value: float
 
     def __eq__(self, other):
         if not isinstance(other, Sensor):
@@ -68,7 +68,7 @@ class Sensor:
         _dc_type = str(obj.get("dc_type")) if "dc_type" in obj else None
         _unit = str(obj.get("unit")) if "unit" in obj else None
         _payload = obj.get("payload") if "payload" in obj else None
-        _value = int(obj.get("value")) if "value" in obj else None
+        _value = float(obj.get("value")) if "value" in obj else None
         return Sensor(
             _id,
             _name,
