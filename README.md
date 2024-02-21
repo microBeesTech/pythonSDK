@@ -6,7 +6,7 @@ Used as a wrapper dependency in the Home Assistant integration.
 Version
 -------
 
-0.0.1
+0.2.9
 
 Installation
 ------------
