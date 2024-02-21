@@ -24,15 +24,3 @@ class Profile:
         return Profile(
             _id, _username, _firstName, _lastName, _email, _locale, _timeZone
         )
-
-
-@dataclass
-class Root:
-    status: int
-    data: Profile
-
-    @staticmethod
-    def from_dict(obj: Any) -> "Root":
-        _status = int(obj.get("status"))
-        _data = Profile.from_dict(obj.get("data"))
-        return Root(_status, _data)

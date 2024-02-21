@@ -6,15 +6,17 @@ from dataclasses import dataclass
 @dataclass
 class Configuration:
     actuator_type: str
+    actuator_timing: float
     icon: str
     color: List[int]
 
     @staticmethod
     def from_dict(obj: Any) -> "Configuration":
         _actuator_type = str(obj.get("actuator_type"))
+        _actuator_timing = float(obj.get("actuator_timing")) if "actuator_timing" in obj else None
         _icon = str(obj.get("icon"))
         _color = obj.get("color") if "color" in obj else None
-        return Configuration(_actuator_type, _icon, _color)
+        return Configuration(_actuator_type, _actuator_timing, _icon, _color)
 
 
 @dataclass
@@ -165,7 +167,24 @@ class Actuator:
             _value,
         )
 
+       
+@dataclass
+class InstanceData:
+    progMode: int
+    targetTemp: float
+    temperature: float
+    childlock: bool
+    deviceMode: int
 
+    @staticmethod
+    def from_dict(obj: Any) -> 'InstanceData':
+        _progMode = int(obj.get("progMode")) if "progMode" in obj  else 0
+        _targetTemp = float(obj.get("targetTemp")) if "targetTemp" in obj else 0
+        _temperature = float(obj.get("temperature")) if "temperature" in obj else 0
+        _childlock = bool(obj.get("childlock")) if "childlock" in obj else False
+        _deviceMode = int(obj.get("deviceMode")) if "deviceMode" in obj else 0
+        return InstanceData(_progMode, _targetTemp, _temperature, _childlock, _deviceMode)
+    
 @dataclass
 class Bee:
     id: int
@@ -182,9 +201,9 @@ class Bee:
     lastActivation: float
     icon: str
     configuration: Configuration
+    instanceData: InstanceData
     sensors: List[Sensor]
     actuators: List[Actuator]
-    status_string: List[StatusString]
 
     def __eq__(self, other):
         if not isinstance(other, Bee):
@@ -243,9 +262,9 @@ class Bee:
             if "actuators" in obj
             else None
         )
-        _status_string = (
-            [StatusString.from_dict(y) for y in obj.get("status_string")]
-            if "status_string" in obj
+        _instanceData = (
+            InstanceData.from_dict(obj.get("instance_data"))
+            if "instance_data" in obj
             else None
         )
         return Bee(
@@ -263,7 +282,7 @@ class Bee:
             _lastActivation,
             _icon,
             _configuration,
+            _instanceData,
             _sensors,
             _actuators,
-            _status_string,
         )

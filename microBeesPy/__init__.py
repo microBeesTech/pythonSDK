@@ -2,8 +2,7 @@ from .bee import (
   Bee,
   Actuator,
   Sensor,
-  Configuration,
-  StatusString
+  Configuration
 )
 
 from .microbees import MicroBees
