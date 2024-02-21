@@ -6,3 +6,5 @@ build/
 dist/
 eggs/
 env/
+venv/
+tests/
