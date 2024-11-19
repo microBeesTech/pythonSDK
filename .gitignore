@@ -8,3 +8,4 @@ eggs/
 env/
 venv/
 tests/
+.DS_Store
