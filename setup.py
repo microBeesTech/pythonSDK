@@ -9,7 +9,7 @@ readme = open(here('README.md')).read()
 setup(
     name='microBeesPy',
     packages=find_packages(),
-    version='0.3.2',
+    version='0.3.3',
     long_description=readme,
     keywords='microbees',
     long_description_content_type="text/markdown",
@@ -21,6 +21,6 @@ setup(
     install_requires=["aiohttp", "setuptools"],
     zip_safe=False,
     platforms=["any"],
-    python_requires='>=3.6',                # Minimum version requirement of the package
-    py_modules=["microBeesPy"],                    # Name of the python package
+    python_requires='>=3.6',
+    py_modules=["microBeesPy"],
 )

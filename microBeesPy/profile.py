@@ -11,6 +11,7 @@ class Profile:
     email: str
     locale: str
     timeZone: str
+    gateSerial: str
 
     @staticmethod
     def from_dict(obj: Any) -> "Profile":
@@ -21,6 +22,7 @@ class Profile:
         _email = str(obj.get("email"))
         _locale = str(obj.get("locale"))
         _timeZone = str(obj.get("timeZone"))
+        _defaultGateSerial = str(obj.get("defaultGateSerial")) if "defaultGateSerial" in obj else ""
         return Profile(
-            _id, _username, _firstName, _lastName, _email, _locale, _timeZone
+            _id, _username, _firstName, _lastName, _email, _locale, _timeZone, _defaultGateSerial
         )
