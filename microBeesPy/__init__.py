@@ -16,3 +16,5 @@ from .exceptions import (
 )
 
 from .profile import Profile
+
+from .mqtt import MicrobeesMqtt
