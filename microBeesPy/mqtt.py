@@ -1,11 +1,12 @@
 import logging
 import paho.mqtt.client as mqtt
+import asyncio
 
 _LOGGER = logging.getLogger(__name__)
 
 class MicrobeesMqtt:
     """Class to handle MQTT communication with the microBees platform."""
-    
+
     def __init__(self, broker, port, username, password, client_id, on_message_callback=None):
         self.broker = broker
         self.port = port
@@ -21,7 +22,7 @@ class MicrobeesMqtt:
         # Use the new API for setting callbacks
         self.client.on_connect = self._on_connect
         self.client.on_disconnect = self._on_disconnect
-        self.client.on_message = self._on_message if on_message_callback else None
+        self.client.on_message = self._on_message
 
     def _on_connect(self, client, userdata, flags, rc):
         """Handle connection to the broker."""
@@ -30,15 +31,18 @@ class MicrobeesMqtt:
 
     def _on_disconnect(self, client, userdata, rc):
         """Handle disconnection from the broker."""
+        if rc != 0:
+            _LOGGER.warning(f"Disconnected from MQTT broker with error code {rc}")
 
     def _on_message(self, client, userdata, message):
-        """Handle incoming messages."""
-        if self.on_message_callback:
-            self.on_message_callback(message)
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(self.on_message_callback(message))
 
     def connect(self):
         """Connect to the MQTT broker."""
         self.client.connect(self.broker, self.port)
+        self.client.loop_start()
 
     def disconnect(self):
         """Disconnect from the MQTT broker."""
@@ -52,6 +56,6 @@ class MicrobeesMqtt:
         """Publish a message to a topic."""
         self.client.publish(topic, payload, qos)
 
-    def loop_forever(self):
-        """Start the network loop."""
+    async def async_loop(self):
+        """Run the MQTT loop in an asyncio-friendly way."""
         self.client.loop_forever()
